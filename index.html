@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>재근이 초대</title>
+<meta property="og:title" content="재근이에서 초대가 왔어요">
+<meta property="og:description" content="재고부터 직원 근무·계약까지, 재근이가 챙겨요">
+<meta property="og:image" content="https://appjeageuni.github.io/jaegeuni-link/icon.png">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --yellow:#FFC93C; --ink:#2B2B2B; --teal:#1F7A6E; --muted:#5A4500; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--yellow); color:var(--ink);
+         font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
+  main { max-width: 440px; margin: 0 auto; padding: 40px 20px 32px; text-align: center; }
+  img { width: 128px; height: 128px; border-radius: 28px; }
+  h1 { font-size: 28px; margin: 16px 0 8px; }
+  p { font-size: 16px; line-height: 1.55; margin: 0 0 12px; }
+  .btn { display:block; min-height:56px; line-height:56px; border-radius:16px; font-size:18px;
+         font-weight:800; text-decoration:none; margin: 12px 0; }
+  .primary { background: var(--teal); color:#fff; }
+  .outline { background:#fff; color:var(--ink); border:2px solid var(--ink); line-height:52px; }
+  .code { display:inline-block; background:#fff; border:2px solid var(--ink); border-radius:12px;
+          padding:8px 16px; font-size:28px; font-weight:800; letter-spacing:6px; margin: 4px 0 8px; }
+  .steps { text-align:left; background:#FFF4D6; border:2px solid var(--ink); border-radius:16px; padding:14px 18px; margin-top:20px; }
+  .steps li { margin: 6px 0; font-size:15px; line-height:1.5; }
+  small { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="icon.png" alt="재근이">
+  <h1>재근이에서 초대가 왔어요</h1>
+  <p>아래 버튼을 눌러 재근이 앱을 열면<br>로그인만으로 바로 합류해요.</p>
+  <div id="codeBox" hidden>
+    <p style="margin:12px 0 0">초대코드</p>
+    <div class="code" id="code"></div>
+  </div>
+  <a class="btn primary" id="open" href="#">재근이 앱에서 열기</a>
+  <a class="btn outline" id="install" href="#">앱 설치하기</a>
+  <ol class="steps">
+    <li>앱이 없으면 <b>앱 설치하기</b>를 눌러 설치해요.</li>
+    <li>설치 후 이 페이지로 돌아와 <b>재근이 앱에서 열기</b>를 눌러요.</li>
+    <li>카카오나 휴대폰 번호로 로그인하면 끝!</li>
+  </ol>
+  <p style="margin-top:16px"><small>링크가 열리지 않으면 앱에서 위 초대코드를 직접 입력해 주세요.</small></p>
+</main>
+<script>
+  // 아직 스토어 출시 전: 설치 주소는 출시 후 플레이스토어/앱스토어 주소로 바꾼다.
+  var STORE_ANDROID = 'https://play.google.com/store/apps/details?id=com.jaegeuni.app';
+  var STORE_IOS = 'https://apps.apple.com/';
+  var code = (new URLSearchParams(location.search).get('c') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  var appUrl = 'jaegeuni://invite/' + code;
+  var openHref = isAndroid
+    ? 'intent://invite/' + code + '#Intent;scheme=jaegeuni;package=com.jaegeuni.app;S.browser_fallback_url=' + encodeURIComponent(STORE_ANDROID) + ';end'
+    : appUrl;
+  if (code) {
+    document.getElementById('code').textContent = code;
+    document.getElementById('codeBox').hidden = false;
+  }
+  document.getElementById('open').href = code ? openHref : '#';
+  document.getElementById('install').href = isAndroid ? STORE_ANDROID : STORE_IOS;
+</script>
+</body>
+</html>
